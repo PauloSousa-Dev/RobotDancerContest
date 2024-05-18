@@ -1,0 +1,19 @@
+{
+  "name": "RobotBattle",
+  "version": "1.0.0",
+  "source": "src/index.html",
+  "author": "Paulo Jorge Sousa <p.sousa.dev@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "parcel": "^2.12.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

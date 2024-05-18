@@ -1,0 +1,18 @@
+:root {
+  --primary: #ddefff;
+  --secondary: #aaccff;
+  --text-color: 333333;
+}
+
+html {
+  color: var(--primary);
+}
+
+body {
+  background: radial-gradient(circle, #e0e0e0, #b3b3b3 50%, #808080);
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
