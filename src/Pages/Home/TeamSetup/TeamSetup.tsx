@@ -10,8 +10,8 @@ interface TeamSetupProps {
 }
 
 const TeamSetup = ({ setTeams }: TeamSetupProps) => {
-  const [team1, setTeam1] = useState<Robot[]>([]);
-  const [team2, setTeam2] = useState<Robot[]>([]);
+  const [team1, setTeam1] = useState<Robot[] | null>(null);
+  const [team2, setTeam2] = useState<Robot[] | null>(null);
   const [teamName1, setTeamName1] = useState<string>("");
   const [teamName2, setTeamName2] = useState<string>("");
 
@@ -47,8 +47,12 @@ const TeamSetup = ({ setTeams }: TeamSetupProps) => {
         value={teamName2}
         onChange={(e) => setTeamName2(e.target.value)}
       />
-      <button onClick={fetchRobots}>Fetch Robots</button>
-      <button onClick={handleStartCompetition}>Start Competition</button>
+      {teamName1 && teamName2 && (
+        <button onClick={fetchRobots}>Fetch Robots</button>
+      )}
+      {team1 && team2 && (
+        <button onClick={handleStartCompetition}>Start Competition</button>
+      )}
     </div>
   );
 };
