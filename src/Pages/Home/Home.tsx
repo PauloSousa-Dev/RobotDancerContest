@@ -1,31 +1,13 @@
-import { useState } from "react";
-import { TeamSetup } from "./TeamSetup";
-import DanceOff from "./DanceOff";
-import Leaderboard from "./Leaderboard";
+import "./styles.css";
+import { RobotSetup } from "./RobotSetup";
 
-type Robot = {
-  id: number;
-  name: string;
-  powermove: string;
-  experience: number;
-  outOfOrder: boolean;
-  avatar: string;
-};
-
-type Team = {
-  name: string;
-  robots: Robot[];
-};
-
-const App = () => {
-  const [teams, setTeams] = useState<{ team1: Team; team2: Team } | null>(null);
-
+const Home = () => {
   return (
-    <div className="App">
+    <main className="App">
       <h1>Robo-Dance Competition</h1>
-      <TeamSetup setTeams={setTeams} />
-    </div>
+      <RobotSetup />
+    </main>
   );
 };
 
-export { App };
+export { Home };

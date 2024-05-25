@@ -9,7 +9,9 @@ html {
 }
 
 body {
-  background: radial-gradient(circle, #e0e0e0, #b3b3b3 50%, #808080);
+  background: radial-gradient(circle at top, #2c2c2c, #1a1a1a);
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
   height: 100vh;
   margin: 0;
   display: flex;
