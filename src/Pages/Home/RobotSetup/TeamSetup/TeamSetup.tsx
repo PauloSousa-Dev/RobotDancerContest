@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button";
 import { NUMBEROFROBOTS, Robot, Team } from "../RobotSetup";
 import styles from "./style.module.scss";
 
@@ -47,7 +48,9 @@ const TeamSetup = ({
       </div>
 
       {isGameReadyToStart && (
-        <button onClick={() => getRobots()}>Fetch Robots</button>
+        <Button size="medium" onClick={() => getRobots()}>
+          Fetch Robots
+        </Button>
       )}
     </div>
   );

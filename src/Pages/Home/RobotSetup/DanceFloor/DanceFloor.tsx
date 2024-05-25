@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NUMBEROFROBOTS, type Team } from "../RobotSetup";
 import styles from "./style.module.scss";
+import { Button } from "@/components/Button";
 
 const API_URL = "https://challenge.parkside-interactive.com/api/danceoffs";
 
@@ -61,7 +62,9 @@ const DanceFloor = ({
           </div>
         ))}
       </div>
-      <button onClick={() => runDance()}> Start Contest</button>
+      <Button size="medium" onClick={() => runDance()}>
+        Start Contest
+      </Button>
     </div>
   );
 };
