@@ -1,0 +1,18 @@
+.wrapper {
+  h2 {
+    text-align: center;
+  }
+}
+
+.teamWrapper {
+  padding: 2rem 0;
+  justify-items: center;
+  display: grid;
+  justify-content: space-around;
+  align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  .teamName {
+    margin-bottom: 2rem;
+    font-size: 1.6rem;
+  }
+}

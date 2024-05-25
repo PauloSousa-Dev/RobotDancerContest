@@ -1,1 +1,1 @@
-export { RobotSetup } from "./RobotSetup";
+export { RobotSetup, NUMBEROFROBOTS } from "./RobotSetup";

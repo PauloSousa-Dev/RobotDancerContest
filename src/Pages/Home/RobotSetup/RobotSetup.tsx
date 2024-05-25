@@ -2,7 +2,8 @@ import { useState } from "react";
 import { TeamSetup } from "./TeamSetup";
 import { DanceFloor } from "./DanceFloor";
 
-const NUMBEROFTEAMS = 3;
+const NUMBEROFTEAMS = 2;
+const NUMBEROFROBOTS = 5;
 
 type Robot = {
   id: number;
@@ -20,7 +21,7 @@ type Team = {
 };
 
 const isTeamsComplete = (teams: Team[]) =>
-  teams.every((team) => team.robots.length === 5);
+  teams.every((team) => team.robots.length === NUMBEROFROBOTS);
 
 const RobotSetup = () => {
   const [teams, setTeams] = useState<Team[]>(
@@ -35,29 +36,26 @@ const RobotSetup = () => {
 
   const isRobotsReadyToDance = isTeamsComplete(teams);
 
+  const setTeam = (id: number, update: any) => {
+    setTeams((teams) => {
+      return teams.map((team) => {
+        if (team.id === id) {
+          return {
+            ...team,
+            ...update,
+          };
+        }
+        return team;
+      });
+    });
+  };
+
   if (isRobotsReadyToDance) {
-    return <DanceFloor getTeams={teams} />;
+    return <DanceFloor getTeams={teams} setTeam={setTeam} />;
   }
 
-  return (
-    <TeamSetup
-      getTeams={teams}
-      setTeam={(id: number, update: any) => {
-        setTeams((teams) => {
-          console.log(id, update);
-          return teams.map((team) => {
-            if (team.id === id) {
-              return {
-                ...team,
-                ...update,
-              };
-            }
-            return team;
-          });
-        });
-      }}
-    />
-  );
+  return <TeamSetup getTeams={teams} setTeam={setTeam} />;
 };
 
-export { RobotSetup };
+export { RobotSetup, NUMBEROFROBOTS };
+export type { Team, Robot };
