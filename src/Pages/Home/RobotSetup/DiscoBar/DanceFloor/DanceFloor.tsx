@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NUMBEROFROBOTS, type Team } from "../RobotSetup";
+import { NUMBEROFROBOTS, type Team } from "../../RobotSetup";
 import styles from "./style.module.scss";
 import { Button } from "@/components/Button";
 
@@ -10,12 +10,16 @@ interface DanceOffResult {
   winner: number;
 }
 
-const postWinner = async (results: any) => {
-  await fetch(API_URL, {
+const postWinner = async (results: any, setRenderBoard: any) => {
+  const response = await fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ danceoffs: results }),
   });
+
+  if (response.ok) {
+    setRenderBoard(true);
+  }
 };
 
 const getRandomWinner = (robots: any) => {
@@ -25,9 +29,10 @@ const getRandomWinner = (robots: any) => {
 
 const DanceFloor = ({
   getTeams,
+  setRenderBoard,
 }: {
   getTeams: Team[];
-  setTeam: (id: number, object: unknown) => void;
+  setRenderBoard: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [results, setResults] = useState<DanceOffResult[]>([]);
   const runDance = () => {
@@ -45,19 +50,21 @@ const DanceFloor = ({
 
   useEffect(() => {
     if (results.length >= NUMBEROFROBOTS) {
-      postWinner(results);
+      postWinner(results, setRenderBoard);
     }
   }, [results]);
 
   return (
     <div className={styles.wrapper}>
-      <h2>Dance Floor</h2>
       <div className={styles.teamWrapper}>
         {getTeams.map(({ id, name, robots }) => (
           <div key={id}>
             <div className={styles.teamName}>Team {name}</div>
             {robots.map(({ id, name }) => (
-              <div key={id}>{name}</div>
+              <div key={id}>
+                <div>{name}</div>
+                <div>{id}</div>
+              </div>
             ))}
           </div>
         ))}

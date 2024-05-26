@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TeamSetup } from "./TeamSetup";
-import { DanceFloor } from "./DanceFloor";
+import { DiscoBar } from "./DiscoBar";
 
 const NUMBEROFTEAMS = 2;
 const NUMBEROFROBOTS = 5;
@@ -51,7 +51,7 @@ const RobotSetup = () => {
   };
 
   if (isRobotsReadyToDance) {
-    return <DanceFloor getTeams={teams} setTeam={setTeam} />;
+    return <DiscoBar getTeams={teams} />;
   }
 
   return <TeamSetup getTeams={teams} setTeam={setTeam} />;

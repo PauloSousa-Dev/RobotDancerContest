@@ -6,7 +6,6 @@ type ButtonTypes = PropsWithChildren & {
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
   variant?: "primary" | "secondary";
-
   size: "small" | "medium" | "large";
 };
 const Button = ({

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { NUMBEROFROBOTS } from "../../RobotSetup";
 
 const API_URL = "https://challenge.parkside-interactive.com/api/danceoffs";
 
@@ -26,11 +27,14 @@ const Leaderboard = () => {
     <div>
       <h2>Leaderboard</h2>
       <ul>
-        {leaderboard.map((item, index) => (
-          <li
-            key={index}
-          >{`Match ${item.id}: Winner is Robot ${item.winner}`}</li>
-        ))}
+        {leaderboard
+          .slice(0, NUMBEROFROBOTS)
+          .reverse()
+          .map((item, index) => (
+            <li
+              key={index}
+            >{`Match ${item.id}: Winner is Robot ${item.winner}`}</li>
+          ))}
       </ul>
     </div>
   );
