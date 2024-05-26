@@ -15,6 +15,7 @@ type TeamsContextType = {
   setTeam: (id: number, update: any) => void;
   setRobots: (robotIds: number[], updates: RobotUpdates) => void;
   getRobotsById: (robotIds: number[]) => Robot[];
+  cleanWinners: () => void;
   consts: { NUMBEROFTEAMS: number; NUMBEROFROBOTS: number };
 };
 
@@ -56,6 +57,22 @@ const TeamsProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
+  const cleanWinners = () => {
+    setTeams((prevTeams) => {
+      console.log("PrevTeams", prevTeams);
+      const newTeam = prevTeams.map((team) => ({
+        ...team,
+        robots: team.robots.map((robot) => {
+          const { winner, ...rest } = robot;
+          console.log("robot", robot, rest);
+          return rest;
+        }),
+      }));
+      console.log("newTeam", newTeam);
+      return newTeam;
+    });
+  };
+
   const setRobots = (robotIds: number[], updates: RobotUpdates) => {
     setTeams((prevTeams) =>
       prevTeams.map((team) => ({
@@ -79,6 +96,7 @@ const TeamsProvider = ({ children }: PropsWithChildren) => {
         setTeam,
         setRobots,
         getRobotsById,
+        cleanWinners,
         consts: { NUMBEROFTEAMS, NUMBEROFROBOTS },
       }}
     >

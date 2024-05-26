@@ -16,12 +16,12 @@ body {
   background: radial-gradient(circle at top, #2c2c2c, #1a1a1a);
   color: #ffffff;
   font-family: "Roboto", sans-serif;
-  height: 100vh;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: var(--font-size-base);
+  padding: 5rem;
 }
 
 main {

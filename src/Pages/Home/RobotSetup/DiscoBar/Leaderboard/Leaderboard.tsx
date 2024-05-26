@@ -2,6 +2,7 @@ import { useTeamsContext } from "@/Contexts";
 import { Robot, RobotUpdates } from "@/Contexts/Teams/Teams";
 import { useEffect, useState } from "react";
 import styles from "./style.module.scss";
+import { Image } from "@/components/Image";
 
 const API_URL = "https://challenge.parkside-interactive.com/api/danceoffs";
 
@@ -32,9 +33,9 @@ const Leaderboard = () => {
     consts: { NUMBEROFROBOTS },
     setRobots,
     getRobotsById,
+    teams,
   } = useTeamsContext();
   const [leaderboard, setLeaderboard] = useState<Robot[]>([]);
-
   useEffect(() => {
     fetchLeaderboard(setLeaderboard, setRobots, getRobotsById, NUMBEROFROBOTS);
   }, []);
@@ -43,8 +44,15 @@ const Leaderboard = () => {
     <div>
       <h2>Winners</h2>
       <ul className={styles.wrapper}>
-        {leaderboard.map(({ id, name }, index) => (
-          <li key={index}>{` Winner ${name}`}</li>
+        {leaderboard.map(({ id, avatar, name }) => (
+          <li key={id}>
+            <Image
+              src={avatar}
+              alt="Robot image"
+              className={styles.robotImage}
+            />
+            <span>{name}</span>
+          </li>
         ))}
       </ul>
     </div>

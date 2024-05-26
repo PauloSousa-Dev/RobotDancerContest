@@ -1,5 +1,6 @@
 import { Robot } from "@/Contexts/Teams";
 import styles from "./style.module.scss";
+import { Image } from "@/components/Image";
 
 const Robots = ({ robots }: { robots: Robot[] }) => (
   <>
@@ -8,7 +9,7 @@ const Robots = ({ robots }: { robots: Robot[] }) => (
         key={id}
         className={`${styles.wrapper} ${winner ? styles.winner : ""}`}
       >
-        <img src={avatar} alt="Robot image" className={styles.robotImage} />
+        <Image src={avatar} alt="Robot image" className={styles.robotImage} />
         <div>{name}</div>
       </div>
     ))}

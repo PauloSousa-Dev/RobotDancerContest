@@ -3,6 +3,7 @@ import styles from "./style.module.scss";
 import { Button } from "@/components/Button";
 import { useTeamsContext } from "@/Contexts";
 import { Robots } from "./Robots";
+import { Team } from "@/Contexts/Teams";
 
 const API_URL = "https://challenge.parkside-interactive.com/api/danceoffs";
 
@@ -11,7 +12,7 @@ interface DanceOffResult {
   winner: number;
 }
 
-const postWinner = async (results: any, setRenderBoard: any) => {
+const postWinner = async (results: DanceOffResult[], setRenderBoard: any) => {
   const response = await fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -23,9 +24,26 @@ const postWinner = async (results: any, setRenderBoard: any) => {
   }
 };
 
-const getRandomWinner = (robots: any) => {
+const getRandomWinner = (robots: number[]) => {
   const randomIndex = Math.floor(Math.random() * robots.length);
   return robots[randomIndex];
+};
+
+const runDance = (
+  teams: Team[],
+  setResults: React.Dispatch<React.SetStateAction<DanceOffResult[]>>,
+  NUMBEROFROBOTS: number
+) => {
+  const newResults: DanceOffResult[] = [];
+  for (let dance = 0; dance < NUMBEROFROBOTS; dance++) {
+    const robotsInDance = teams.map((team) => team.robots[dance].id);
+    const winner = getRandomWinner(robotsInDance);
+    newResults.push({
+      opponents: robotsInDance,
+      winner: winner,
+    });
+  }
+  setResults(newResults);
 };
 
 const DanceFloor = ({
@@ -35,27 +53,16 @@ const DanceFloor = ({
 }) => {
   const {
     teams,
+    cleanWinners,
     consts: { NUMBEROFROBOTS },
   } = useTeamsContext();
   const [results, setResults] = useState<DanceOffResult[]>([]);
-  const runDance = () => {
-    const newResults: DanceOffResult[] = [];
-    for (let dance = 0; dance < NUMBEROFROBOTS; dance++) {
-      const robotsInDance = teams.map((team) => team.robots[dance].id);
-      const winner = getRandomWinner(robotsInDance);
-      newResults.push({
-        opponents: robotsInDance,
-        winner: winner,
-      });
-    }
-    setResults(newResults);
-  };
-
+  const robotsAlreadyDance = results.length >= NUMBEROFROBOTS;
   useEffect(() => {
-    if (results.length >= NUMBEROFROBOTS) {
+    if (robotsAlreadyDance) {
       postWinner(results, setRenderBoard);
     }
-  }, [results]);
+  }, [robotsAlreadyDance, results, setRenderBoard]);
 
   return (
     <div className={styles.wrapper}>
@@ -67,9 +74,32 @@ const DanceFloor = ({
           </div>
         ))}
       </div>
-      <Button size="medium" onClick={() => runDance()}>
-        Start Contest
-      </Button>
+      <div className={styles.buttonWrapper}>
+        <Button
+          size="medium"
+          disabled={robotsAlreadyDance}
+          onClick={() => {
+            console.log("Entreiiii");
+            cleanWinners();
+            runDance(teams, setResults, NUMBEROFROBOTS);
+          }}
+        >
+          Start Contest
+        </Button>
+
+        {robotsAlreadyDance && (
+          <Button
+            size="medium"
+            onClick={() => {
+              cleanWinners();
+              setRenderBoard(false);
+              setResults([]);
+            }}
+          >
+            reset
+          </Button>
+        )}
+      </div>
     </div>
   );
 };
