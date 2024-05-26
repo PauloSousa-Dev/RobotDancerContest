@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 import { Button } from "@/components/Button";
 import { useTeamsContext } from "@/Contexts";
+import { Robots } from "./Robots";
 
 const API_URL = "https://challenge.parkside-interactive.com/api/danceoffs";
 
@@ -62,12 +63,7 @@ const DanceFloor = ({
         {teams.map(({ id, name, robots }) => (
           <div key={id}>
             <div className={styles.teamName}>Team {name}</div>
-            {robots.map(({ id, name }) => (
-              <div key={id}>
-                <div>{name}</div>
-                <div>{id}</div>
-              </div>
-            ))}
+            <Robots robots={robots} />
           </div>
         ))}
       </div>

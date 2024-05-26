@@ -7,11 +7,14 @@ type Robot = {
   experience: number;
   outOfOrder: boolean;
   avatar: string;
+  winner?: boolean;
 };
 
 type TeamsContextType = {
   teams: Team[];
   setTeam: (id: number, update: any) => void;
+  setRobots: (robotIds: number[], updates: RobotUpdates) => void;
+  getRobotsById: (robotIds: number[]) => Robot[];
   consts: { NUMBEROFTEAMS: number; NUMBEROFROBOTS: number };
 };
 
@@ -20,6 +23,8 @@ type Team = {
   name: string;
   robots: Robot[];
 };
+
+type RobotUpdates = Omit<Partial<Robot>, "id">;
 
 const NUMBEROFTEAMS = 2;
 const NUMBEROFROBOTS = 5;
@@ -51,9 +56,31 @@ const TeamsProvider = ({ children }: PropsWithChildren) => {
     });
   };
 
+  const setRobots = (robotIds: number[], updates: RobotUpdates) => {
+    setTeams((prevTeams) =>
+      prevTeams.map((team) => ({
+        ...team,
+        robots: team.robots.map((robot) =>
+          robotIds.includes(robot.id) ? { ...robot, ...updates } : robot
+        ),
+      }))
+    );
+  };
+
+  const getRobotsById = (robotIds: number[]): Robot[] => {
+    const allRobots = teams.flatMap((team) => team.robots);
+    return allRobots.filter((robot) => robotIds.includes(robot.id));
+  };
+
   return (
     <TeamsContext.Provider
-      value={{ teams, setTeam, consts: { NUMBEROFTEAMS, NUMBEROFROBOTS } }}
+      value={{
+        teams,
+        setTeam,
+        setRobots,
+        getRobotsById,
+        consts: { NUMBEROFTEAMS, NUMBEROFROBOTS },
+      }}
     >
       {children}
     </TeamsContext.Provider>
@@ -70,4 +97,4 @@ const useTeamsContext = () => {
 };
 
 export { TeamsProvider, useTeamsContext };
-export type { Robot, Team };
+export type { Robot, Team, RobotUpdates };
