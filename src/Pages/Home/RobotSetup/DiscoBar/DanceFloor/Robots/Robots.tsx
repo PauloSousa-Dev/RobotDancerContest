@@ -1,4 +1,4 @@
-import { Robot } from "@/Contexts/Teams";
+import type { Robot } from "@/Contexts/Teams";
 import styles from "./style.module.scss";
 import { Image } from "@/components/Image";
 

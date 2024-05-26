@@ -3,7 +3,7 @@ import styles from "./style.module.scss";
 import { Button } from "@/components/Button";
 import { useTeamsContext } from "@/Contexts";
 import { Robots } from "./Robots";
-import { Team } from "@/Contexts/Teams";
+import type { Team } from "@/Contexts/Teams";
 
 const API_URL = "https://challenge.parkside-interactive.com/api/danceoffs";
 
@@ -12,7 +12,10 @@ interface DanceOffResult {
   winner: number;
 }
 
-const postWinner = async (results: DanceOffResult[], setRenderBoard: any) => {
+const postWinner = async (
+  results: DanceOffResult[],
+  setRenderBoard: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   const response = await fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -69,7 +72,7 @@ const DanceFloor = ({
       <div className={styles.teamWrapper}>
         {teams.map(({ id, name, robots }) => (
           <div key={id}>
-            <div className={styles.teamName}>Team {name}</div>
+            <span className={styles.teamName}>Team {name}</span>
             <Robots robots={robots} />
           </div>
         ))}
@@ -79,8 +82,6 @@ const DanceFloor = ({
           size="medium"
           disabled={robotsAlreadyDance}
           onClick={() => {
-            console.log("Entreiiii");
-            cleanWinners();
             runDance(teams, setResults, NUMBEROFROBOTS);
           }}
         >

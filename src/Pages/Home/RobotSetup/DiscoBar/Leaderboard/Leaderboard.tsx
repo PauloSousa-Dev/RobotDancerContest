@@ -1,5 +1,5 @@
 import { useTeamsContext } from "@/Contexts";
-import { Robot, RobotUpdates } from "@/Contexts/Teams/Teams";
+import type { Robot, SetRobotsType, getRobotsByIdType } from "@/Contexts/Teams";
 import { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 import { Image } from "@/components/Image";
@@ -15,8 +15,8 @@ interface LeaderboardItem {
 
 const fetchLeaderboard = async (
   setLeaderboard: React.Dispatch<React.SetStateAction<Robot[]>>,
-  setRobots: (robotIds: number[], updates: RobotUpdates) => void,
-  getRobotsById: (robotIds: number[]) => Robot[],
+  setRobots: SetRobotsType,
+  getRobotsById: getRobotsByIdType,
   NUMBEROFROBOTS: number
 ) => {
   const response = await fetch(API_URL);

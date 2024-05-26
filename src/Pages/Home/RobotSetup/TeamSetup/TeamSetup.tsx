@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import styles from "./style.module.scss";
 import { useTeamsContext } from "@/Contexts";
-import { Robot, Team } from "@/Contexts/Teams";
+import type { Robot, Team, SetTeamType } from "@/Contexts/Teams";
 
 const API_URL = "https://challenge.parkside-interactive.com/api/robots";
 
@@ -20,7 +20,7 @@ const fetchRobots = async (index: number, NUMBEROFROBOTS: number) => {
 
 const getRobots = (
   teams: Team[],
-  setTeam: (id: number, update: any) => void,
+  setTeam: SetTeamType,
   NUMBEROFROBOTS: number
 ) => {
   teams.forEach(({ id }, index) => {
@@ -42,7 +42,7 @@ const TeamSetup = () => {
     <div className={styles.wrapper}>
       <h2>Set Up Teams</h2>
       <div className={styles.inputWrapper}>
-        {teams.map(({ name, id }: any, index: number) => (
+        {teams.map(({ name, id }: Team) => (
           <input
             key={id}
             type="text"

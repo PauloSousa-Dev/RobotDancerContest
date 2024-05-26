@@ -10,19 +10,22 @@ type Robot = {
   winner?: boolean;
 };
 
-type TeamsContextType = {
-  teams: Team[];
-  setTeam: (id: number, update: any) => void;
-  setRobots: (robotIds: number[], updates: RobotUpdates) => void;
-  getRobotsById: (robotIds: number[]) => Robot[];
-  cleanWinners: () => void;
-  consts: { NUMBEROFTEAMS: number; NUMBEROFROBOTS: number };
-};
-
 type Team = {
   id: number;
   name: string;
   robots: Robot[];
+};
+
+type SetTeamType = (id: number, update: Omit<Partial<Team>, "id">) => void;
+type SetRobotsType = (robotIds: number[], updates: RobotUpdates) => void;
+type getRobotsByIdType = (robotIds: number[]) => Robot[];
+type TeamsContextType = {
+  teams: Team[];
+  setTeam: SetTeamType;
+  setRobots: SetRobotsType;
+  getRobotsById: getRobotsByIdType;
+  cleanWinners: () => void;
+  consts: { NUMBEROFTEAMS: number; NUMBEROFROBOTS: number };
 };
 
 type RobotUpdates = Omit<Partial<Robot>, "id">;
@@ -43,7 +46,7 @@ const TeamsProvider = ({ children }: PropsWithChildren) => {
       }))
   );
 
-  const setTeam = (id: number, update: any) => {
+  const setTeam = (id: number, update: Omit<Partial<Team>, "id">) => {
     setTeams((teams) => {
       return teams.map((team) => {
         if (team.id === id) {
@@ -59,16 +62,13 @@ const TeamsProvider = ({ children }: PropsWithChildren) => {
 
   const cleanWinners = () => {
     setTeams((prevTeams) => {
-      console.log("PrevTeams", prevTeams);
       const newTeam = prevTeams.map((team) => ({
         ...team,
         robots: team.robots.map((robot) => {
           const { winner, ...rest } = robot;
-          console.log("robot", robot, rest);
           return rest;
         }),
       }));
-      console.log("newTeam", newTeam);
       return newTeam;
     });
   };
@@ -115,4 +115,11 @@ const useTeamsContext = () => {
 };
 
 export { TeamsProvider, useTeamsContext };
-export type { Robot, Team, RobotUpdates };
+export type {
+  Robot,
+  Team,
+  RobotUpdates,
+  SetTeamType,
+  SetRobotsType,
+  getRobotsByIdType,
+};
