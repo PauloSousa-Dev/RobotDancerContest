@@ -1,13 +1,14 @@
 import { Button } from "@/components/Button";
-import { NUMBEROFROBOTS, Robot, Team } from "../RobotSetup";
 import styles from "./style.module.scss";
+import { useTeamsContext } from "@/Contexts";
+import { Robot, Team } from "@/Contexts/Teams";
 
 const API_URL = "https://challenge.parkside-interactive.com/api/robots";
 
 const hasEmptyName = (teams: Team[]) =>
   teams.some((team: Team) => team.name === "");
 
-const fetchRobots = async (index: number) => {
+const fetchRobots = async (index: number, NUMBEROFROBOTS: number) => {
   const response = await fetch(API_URL);
   const robots: Robot[] = await response.json();
   const startIndex = index * NUMBEROFROBOTS;
@@ -17,26 +18,31 @@ const fetchRobots = async (index: number) => {
     .slice(startIndex, startIndex + NUMBEROFROBOTS);
 };
 
-const TeamSetup = ({
-  getTeams,
-  setTeam,
-}: {
-  getTeams: Team[];
-  setTeam: (id: number, object: unknown) => void;
-}) => {
-  const isGameReadyToStart = !hasEmptyName(getTeams);
+const getRobots = (
+  teams: Team[],
+  setTeam: (id: number, update: any) => void,
+  NUMBEROFROBOTS: number
+) => {
+  teams.forEach(({ id }, index) => {
+    fetchRobots(index, NUMBEROFROBOTS).then((value) =>
+      setTeam(id, { robots: value })
+    );
+  });
+};
 
-  const getRobots = () => {
-    getTeams.forEach(({ id }, index) => {
-      fetchRobots(index).then((value) => setTeam(id, { robots: value }));
-    });
-  };
+const TeamSetup = () => {
+  const {
+    teams,
+    setTeam,
+    consts: { NUMBEROFROBOTS },
+  } = useTeamsContext();
+  const isGameReadyToStart = !hasEmptyName(teams);
 
   return (
     <div className={styles.wrapper}>
       <h2>Set Up Teams</h2>
       <div className={styles.inputWrapper}>
-        {getTeams.map(({ name, id }: any, index: number) => (
+        {teams.map(({ name, id }: any, index: number) => (
           <input
             key={id}
             type="text"
@@ -48,7 +54,10 @@ const TeamSetup = ({
       </div>
 
       {isGameReadyToStart && (
-        <Button size="medium" onClick={() => getRobots()}>
+        <Button
+          size="medium"
+          onClick={() => getRobots(teams, setTeam, NUMBEROFROBOTS)}
+        >
           Fetch Robots
         </Button>
       )}

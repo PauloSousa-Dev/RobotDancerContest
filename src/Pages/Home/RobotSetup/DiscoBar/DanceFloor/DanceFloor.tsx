@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { NUMBEROFROBOTS, type Team } from "../../RobotSetup";
 import styles from "./style.module.scss";
 import { Button } from "@/components/Button";
+import { useTeamsContext } from "@/Contexts";
 
 const API_URL = "https://challenge.parkside-interactive.com/api/danceoffs";
 
@@ -28,17 +28,19 @@ const getRandomWinner = (robots: any) => {
 };
 
 const DanceFloor = ({
-  getTeams,
   setRenderBoard,
 }: {
-  getTeams: Team[];
   setRenderBoard: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const {
+    teams,
+    consts: { NUMBEROFROBOTS },
+  } = useTeamsContext();
   const [results, setResults] = useState<DanceOffResult[]>([]);
   const runDance = () => {
     const newResults: DanceOffResult[] = [];
     for (let dance = 0; dance < NUMBEROFROBOTS; dance++) {
-      const robotsInDance = getTeams.map((team) => team.robots[dance].id);
+      const robotsInDance = teams.map((team) => team.robots[dance].id);
       const winner = getRandomWinner(robotsInDance);
       newResults.push({
         opponents: robotsInDance,
@@ -57,7 +59,7 @@ const DanceFloor = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.teamWrapper}>
-        {getTeams.map(({ id, name, robots }) => (
+        {teams.map(({ id, name, robots }) => (
           <div key={id}>
             <div className={styles.teamName}>Team {name}</div>
             {robots.map(({ id, name }) => (

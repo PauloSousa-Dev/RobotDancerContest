@@ -1,9 +1,6 @@
-import { useState } from "react";
 import { TeamSetup } from "./TeamSetup";
 import { DiscoBar } from "./DiscoBar";
-
-const NUMBEROFTEAMS = 2;
-const NUMBEROFROBOTS = 5;
+import { useTeamsContext } from "@/Contexts";
 
 type Robot = {
   id: number;
@@ -20,42 +17,20 @@ type Team = {
   robots: Robot[];
 };
 
-const isTeamsComplete = (teams: Team[]) =>
-  teams.every((team) => team.robots.length === NUMBEROFROBOTS);
-
 const RobotSetup = () => {
-  const [teams, setTeams] = useState<Team[]>(
-    Array(NUMBEROFTEAMS)
-      .fill(null)
-      .map((_, index) => ({
-        id: index + 1,
-        name: "",
-        robots: [],
-      }))
+  const {
+    teams,
+    consts: { NUMBEROFROBOTS },
+  } = useTeamsContext();
+  const isRobotsReadyToDance = teams.every(
+    (team) => team.robots.length === NUMBEROFROBOTS
   );
 
-  const isRobotsReadyToDance = isTeamsComplete(teams);
-
-  const setTeam = (id: number, update: any) => {
-    setTeams((teams) => {
-      return teams.map((team) => {
-        if (team.id === id) {
-          return {
-            ...team,
-            ...update,
-          };
-        }
-        return team;
-      });
-    });
-  };
-
   if (isRobotsReadyToDance) {
-    return <DiscoBar getTeams={teams} />;
+    return <DiscoBar />;
   }
 
-  return <TeamSetup getTeams={teams} setTeam={setTeam} />;
+  return <TeamSetup />;
 };
 
-export { RobotSetup, NUMBEROFROBOTS };
-export type { Team, Robot };
+export { RobotSetup };

@@ -1,5 +1,5 @@
+import { useTeamsContext } from "@/Contexts";
 import { useEffect, useState } from "react";
-import { NUMBEROFROBOTS } from "../../RobotSetup";
 
 const API_URL = "https://challenge.parkside-interactive.com/api/danceoffs";
 
@@ -11,6 +11,9 @@ interface LeaderboardItem {
 }
 
 const Leaderboard = () => {
+  const {
+    consts: { NUMBEROFROBOTS },
+  } = useTeamsContext();
   const [leaderboard, setLeaderboard] = useState<LeaderboardItem[]>([]);
 
   const fetchLeaderboard = async () => {
