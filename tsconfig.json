@@ -6,8 +6,11 @@
     "strict": true,
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["*"]
-    }
+      "@/*": ["*"],
+      "@/Contexts/*": ["Contexts/*"],
+      "@/mocks/*": ["__mocks__/*"]
+    },
+    "types": ["jest", "node"]
   },
   "include": ["src/**/*", "src/global.d.ts"],
   "exclude": ["node_modules", "dist"]

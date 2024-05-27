@@ -8,13 +8,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .winner {
-  padding: 20px;
-  margin: 20px;
-  text-align: center;
-  font-size: 24px;
+  font-size: 1.6rem;
   font-weight: bold;
   color: #fff;
   background-color: #282c34;
@@ -30,13 +29,9 @@
   width: 100%;
   height: 100%;
   border: 5px solid gold;
+  border-radius: 1rem;
   box-sizing: border-box;
   animation: borderAnimation 2s infinite;
-}
-
-.winner::after {
-  border: 5px solid red;
-  animation-delay: 1s;
 }
 
 @keyframes borderAnimation {
@@ -45,7 +40,7 @@
     opacity: 1;
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.05);
     opacity: 0.5;
   }
   100% {

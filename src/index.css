@@ -12,6 +12,12 @@ html {
   font-size: 62.5%; /* 1rem = 10px */
 }
 
+@media only screen and (max-width: 40em) {
+  html {
+    font-size: 50%;
+  }
+}
+
 body {
   background: radial-gradient(circle at top, #2c2c2c, #1a1a1a);
   color: #ffffff;
@@ -34,11 +40,11 @@ main {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 3rem;
 }
 h2 {
-  font-size: 2.5em;
+  font-size: 2.5rem;
 }
 h3 {
-  font-size: 2em;
+  font-size: 2rem;
 }

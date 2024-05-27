@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Robot Setup component should render correctly 1`] = `
+<div>
+  <h2>
+    Disco Bar
+  </h2>
+  <div
+    class="wrapper"
+  >
+    <div
+      class="teamWrapper"
+    >
+      <div>
+        <span
+          class="teamName"
+        >
+          Team 
+          Team 1
+        </span>
+      </div>
+      <div>
+        <span
+          class="teamName"
+        >
+          Team 
+          Team 2
+        </span>
+      </div>
+    </div>
+    <div
+      class="buttonWrapper"
+    >
+      <button
+        class="btn btn-primary btn-medium"
+        type="button"
+      >
+        Start Contest
+      </button>
+    </div>
+  </div>
+</div>
+`;

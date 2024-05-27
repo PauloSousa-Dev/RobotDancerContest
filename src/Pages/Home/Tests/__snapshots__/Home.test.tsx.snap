@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home component should render correctly 1`] = `
+<div>
+  <h1>
+    Robo-Dance Competition
+  </h1>
+  <div
+    class="wrapper"
+  >
+    <h2>
+      Set Up Teams
+    </h2>
+    <div
+      class="inputWrapper"
+    >
+      <input
+        placeholder="Team 1 Name"
+        type="text"
+        value=""
+      />
+      <input
+        placeholder="Team 2 Name"
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;
